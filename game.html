@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ブロック崩し - Claude Code Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .game-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .game-wrapper {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        #gameCanvas {
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            max-width: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .game-stat {
+            text-align: center;
+        }
+
+        .game-stat-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .game-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .game-controls {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .game-btn {
+            padding: 0.75rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .game-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .game-btn.secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .game-instructions {
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+
+        .game-instructions h4 {
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .game-instructions ul {
+            list-style: none;
+            color: var(--text-muted);
+        }
+
+        .game-instructions li {
+            padding: 0.25rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .game-instructions li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .game-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(15, 23, 42, 0.95);
+            padding: 2rem 3rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 2px solid var(--primary);
+            z-index: 10;
+        }
+
+        .game-message h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-message.win h2 {
+            color: var(--success);
+        }
+
+        .game-message.lose h2 {
+            color: var(--secondary);
+        }
+
+        .game-message p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Mobile touch controls */
+        .touch-controls {
+            display: none;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .touch-btn {
+            width: 80px;
+            height: 60px;
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+
+        .touch-btn:active {
+            background: var(--primary);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .touch-controls {
+                display: flex;
+            }
+
+            .game-info {
+                gap: 1.5rem;
+            }
+        }
+
+        /* Code showcase */
+        .code-showcase {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: left;
+        }
+
+        .code-showcase h3 {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .code-showcase p {
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .code-snippet {
+            background: var(--bg-terminal);
+            border-radius: 12px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'Consolas', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .code-snippet .comment { color: #8b949e; }
+        .code-snippet .keyword { color: #ff7b72; }
+        .code-snippet .function { color: #d2a8ff; }
+        .code-snippet .string { color: #a5d6ff; }
+        .code-snippet .number { color: #79c0ff; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="nav-logo-icon">🤖</span>
+                <span class="nav-logo-text">Claude Code</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">ホーム</a></li>
+                <li><a href="features.html" class="nav-link">機能一覧</a></li>
+                <li><a href="examples.html" class="nav-link">実例</a></li>
+                <li><a href="quickstart.html" class="nav-link">始め方</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>🎮 ブロック崩し</h1>
+        <p>Claude Codeが作成したゲームのデモ</p>
+    </section>
+
+    <!-- Game Section -->
+    <section class="section">
+        <div class="game-container">
+            <div class="game-wrapper">
+                <div class="game-info">
+                    <div class="game-stat">
+                        <div class="game-stat-label">スコア</div>
+                        <div class="game-stat-value" id="score">0</div>
+                    </div>
+                    <div class="game-stat">
+                        <div class="game-stat-label">ライフ</div>
+                        <div class="game-stat-value" id="lives">3</div>
+                    </div>
+                    <div class="game-stat">
+                        <div class="game-stat-label">レベル</div>
+                        <div class="game-stat-value" id="level">1</div>
+                    </div>
+                </div>
+
+                <div class="canvas-wrapper">
+                    <canvas id="gameCanvas" width="600" height="450"></canvas>
+                    <div class="game-message" id="gameMessage" style="display: none;">
+                        <h2 id="messageTitle">ゲームオーバー</h2>
+                        <p id="messageText">スコア: 0</p>
+                        <button class="game-btn" onclick="restartGame()">もう一度プレイ</button>
+                    </div>
+                </div>
+
+                <div class="touch-controls">
+                    <button class="touch-btn" id="leftBtn">◀</button>
+                    <button class="touch-btn" id="rightBtn">▶</button>
+                </div>
+
+                <div class="game-controls">
+                    <button class="game-btn" onclick="startGame()">スタート</button>
+                    <button class="game-btn secondary" onclick="pauseGame()">一時停止</button>
+                </div>
+
+                <div class="game-instructions">
+                    <h4>操作方法</h4>
+                    <ul>
+                        <li><strong>← →</strong> または <strong>A D</strong> キーでパドルを移動</li>
+                        <li><strong>スペース</strong> キーでゲーム開始 / 一時停止</li>
+                        <li>スマホの場合は画面下のボタンで操作</li>
+                        <li>全てのブロックを壊すとレベルクリア！</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Code Showcase -->
+            <div class="code-showcase">
+                <h3>このゲームの作り方</h3>
+                <p>Claude Codeに「ブロック崩しを作って」と伝えるだけで、以下のようなコードが生成されます</p>
+                <div class="code-snippet">
+<span class="comment">// ボールとパドルの衝突判定</span>
+<span class="keyword">function</span> <span class="function">checkPaddleCollision</span>() {
+    <span class="keyword">if</span> (ball.y + ball.radius > paddle.y &&
+        ball.x > paddle.x &&
+        ball.x < paddle.x + paddle.width) {
+
+        <span class="comment">// パドルのどこに当たったかで反射角度を変える</span>
+        <span class="keyword">let</span> hitPos = (ball.x - paddle.x) / paddle.width;
+        <span class="keyword">let</span> angle = hitPos * Math.PI - Math.PI / <span class="number">2</span>;
+
+        ball.dx = ball.speed * Math.cos(angle);
+        ball.dy = -ball.speed * Math.abs(Math.sin(angle));
+
+        <span class="function">playSound</span>(<span class="string">'paddle'</span>);
+    }
+}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Examples -->
+    <section class="section" style="text-align: center;">
+        <a href="examples.html" class="cta-button secondary">← 実例一覧に戻る</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span>🤖</span> Claude Code
+            </div>
+            <p>Powered by Claude Opus 4.5 | Anthropic</p>
+            <div class="footer-links">
+                <a href="https://github.com/anthropics/claude-code">GitHub</a>
+                <a href="https://docs.anthropic.com">Documentation</a>
+            </div>
+            <div class="footer-related">
+                <span>Related:</span>
+                <a href="gemini-cli/index.html">✨ Gemini CLI</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Game Configuration
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Game State
+        let gameRunning = false;
+        let gamePaused = false;
+        let score = 0;
+        let lives = 3;
+        let level = 1;
+
+        // Colors
+        const colors = {
+            paddle: '#6366f1',
+            ball: '#22d3ee',
+            blocks: ['#f43f5e', '#f97316', '#eab308', '#22c55e', '#06b6d4', '#8b5cf6'],
+            text: '#f1f5f9'
+        };
+
+        // Paddle
+        const paddle = {
+            width: 100,
+            height: 15,
+            x: 0,
+            y: 0,
+            speed: 8,
+            dx: 0
+        };
+
+        // Ball
+        const ball = {
+            radius: 8,
+            x: 0,
+            y: 0,
+            speed: 5,
+            dx: 0,
+            dy: 0
+        };
+
+        // Blocks
+        const blockConfig = {
+            rows: 5,
+            cols: 10,
+            width: 54,
+            height: 20,
+            padding: 4,
+            offsetTop: 40,
+            offsetLeft: 15
+        };
+
+        let blocks = [];
+
+        // Initialize game
+        function init() {
+            // Set paddle position
+            paddle.x = (canvas.width - paddle.width) / 2;
+            paddle.y = canvas.height - 40;
+
+            // Set ball position
+            resetBall();
+
+            // Create blocks
+            createBlocks();
+
+            // Update UI
+            updateUI();
+        }
+
+        function resetBall() {
+            ball.x = canvas.width / 2;
+            ball.y = paddle.y - ball.radius - 10;
+            ball.dx = (Math.random() > 0.5 ? 1 : -1) * ball.speed * 0.7;
+            ball.dy = -ball.speed;
+        }
+
+        function createBlocks() {
+            blocks = [];
+            for (let row = 0; row < blockConfig.rows; row++) {
+                for (let col = 0; col < blockConfig.cols; col++) {
+                    blocks.push({
+                        x: blockConfig.offsetLeft + col * (blockConfig.width + blockConfig.padding),
+                        y: blockConfig.offsetTop + row * (blockConfig.height + blockConfig.padding),
+                        width: blockConfig.width,
+                        height: blockConfig.height,
+                        color: colors.blocks[row % colors.blocks.length],
+                        alive: true,
+                        points: (blockConfig.rows - row) * 10
+                    });
+                }
+            }
+        }
+
+        function updateUI() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('lives').textContent = lives;
+            document.getElementById('level').textContent = level;
+        }
+
+        // Drawing functions
+        function drawPaddle() {
+            ctx.fillStyle = colors.paddle;
+            ctx.shadowColor = colors.paddle;
+            ctx.shadowBlur = 15;
+            roundRect(ctx, paddle.x, paddle.y, paddle.width, paddle.height, 5);
+            ctx.shadowBlur = 0;
+        }
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = colors.ball;
+            ctx.shadowColor = colors.ball;
+            ctx.shadowBlur = 15;
+            ctx.fill();
+            ctx.closePath();
+            ctx.shadowBlur = 0;
+        }
+
+        function drawBlocks() {
+            blocks.forEach(block => {
+                if (block.alive) {
+                    ctx.fillStyle = block.color;
+                    ctx.shadowColor = block.color;
+                    ctx.shadowBlur = 5;
+                    roundRect(ctx, block.x, block.y, block.width, block.height, 3);
+                    ctx.shadowBlur = 0;
+                }
+            });
+        }
+
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        // Game logic
+        function movePaddle() {
+            paddle.x += paddle.dx;
+
+            // Wall collision
+            if (paddle.x < 0) paddle.x = 0;
+            if (paddle.x + paddle.width > canvas.width) {
+                paddle.x = canvas.width - paddle.width;
+            }
+        }
+
+        function moveBall() {
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            // Wall collision (left/right)
+            if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) {
+                ball.dx = -ball.dx;
+            }
+
+            // Wall collision (top)
+            if (ball.y - ball.radius < 0) {
+                ball.dy = -ball.dy;
+            }
+
+            // Paddle collision
+            if (ball.y + ball.radius > paddle.y &&
+                ball.y - ball.radius < paddle.y + paddle.height &&
+                ball.x > paddle.x &&
+                ball.x < paddle.x + paddle.width) {
+
+                // Calculate reflection angle based on hit position
+                let hitPos = (ball.x - paddle.x) / paddle.width;
+                let angle = hitPos * Math.PI * 0.7 - Math.PI * 0.35;
+
+                let speed = Math.sqrt(ball.dx * ball.dx + ball.dy * ball.dy);
+                ball.dx = speed * Math.sin(angle);
+                ball.dy = -speed * Math.cos(angle);
+
+                ball.y = paddle.y - ball.radius;
+            }
+
+            // Bottom collision (lose life)
+            if (ball.y + ball.radius > canvas.height) {
+                lives--;
+                updateUI();
+
+                if (lives <= 0) {
+                    gameOver(false);
+                } else {
+                    resetBall();
+                }
+            }
+
+            // Block collision
+            blocks.forEach(block => {
+                if (block.alive) {
+                    if (ball.x + ball.radius > block.x &&
+                        ball.x - ball.radius < block.x + block.width &&
+                        ball.y + ball.radius > block.y &&
+                        ball.y - ball.radius < block.y + block.height) {
+
+                        ball.dy = -ball.dy;
+                        block.alive = false;
+                        score += block.points;
+                        updateUI();
+
+                        // Check win
+                        if (blocks.every(b => !b.alive)) {
+                            levelUp();
+                        }
+                    }
+                }
+            });
+        }
+
+        function levelUp() {
+            level++;
+            ball.speed += 0.5;
+            createBlocks();
+            resetBall();
+            updateUI();
+
+            // Brief pause
+            gamePaused = true;
+            setTimeout(() => {
+                gamePaused = false;
+            }, 1000);
+        }
+
+        function gameOver(won) {
+            gameRunning = false;
+            const messageEl = document.getElementById('gameMessage');
+            const titleEl = document.getElementById('messageTitle');
+            const textEl = document.getElementById('messageText');
+
+            if (won) {
+                titleEl.textContent = '🎉 クリア！';
+                messageEl.classList.add('win');
+                messageEl.classList.remove('lose');
+            } else {
+                titleEl.textContent = '💥 ゲームオーバー';
+                messageEl.classList.add('lose');
+                messageEl.classList.remove('win');
+            }
+            textEl.textContent = `スコア: ${score}`;
+            messageEl.style.display = 'block';
+        }
+
+        function draw() {
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw game elements
+            drawBlocks();
+            drawPaddle();
+            drawBall();
+        }
+
+        function update() {
+            if (!gameRunning || gamePaused) return;
+
+            movePaddle();
+            moveBall();
+            draw();
+
+            requestAnimationFrame(update);
+        }
+
+        function startGame() {
+            if (!gameRunning) {
+                gameRunning = true;
+                gamePaused = false;
+                document.getElementById('gameMessage').style.display = 'none';
+                update();
+            } else if (gamePaused) {
+                gamePaused = false;
+                update();
+            }
+        }
+
+        function pauseGame() {
+            if (gameRunning) {
+                gamePaused = !gamePaused;
+                if (!gamePaused) {
+                    update();
+                }
+            }
+        }
+
+        function restartGame() {
+            score = 0;
+            lives = 3;
+            level = 1;
+            ball.speed = 5;
+            gameRunning = false;
+            gamePaused = false;
+            init();
+            draw();
+            document.getElementById('gameMessage').style.display = 'none';
+        }
+
+        // Controls
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+                paddle.dx = -paddle.speed;
+            }
+            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+                paddle.dx = paddle.speed;
+            }
+            if (e.key === ' ') {
+                e.preventDefault();
+                if (!gameRunning) {
+                    startGame();
+                } else {
+                    pauseGame();
+                }
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+                if (paddle.dx < 0) paddle.dx = 0;
+            }
+            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+                if (paddle.dx > 0) paddle.dx = 0;
+            }
+        });
+
+        // Touch controls
+        const leftBtn = document.getElementById('leftBtn');
+        const rightBtn = document.getElementById('rightBtn');
+
+        leftBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            paddle.dx = -paddle.speed;
+        });
+        leftBtn.addEventListener('touchend', () => {
+            paddle.dx = 0;
+        });
+
+        rightBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            paddle.dx = paddle.speed;
+        });
+        rightBtn.addEventListener('touchend', () => {
+            paddle.dx = 0;
+        });
+
+        // Mouse control
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const mouseX = (e.clientX - rect.left) * scaleX;
+            paddle.x = mouseX - paddle.width / 2;
+
+            if (paddle.x < 0) paddle.x = 0;
+            if (paddle.x + paddle.width > canvas.width) {
+                paddle.x = canvas.width - paddle.width;
+            }
+        });
+
+        // Initialize
+        init();
+        draw();
+    </script>
+</body>
+</html>

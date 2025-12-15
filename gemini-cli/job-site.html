@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobFinder - 架空の求人サイト</title>
+    <link rel="stylesheet" href="job-site.css">
+</head>
+<body>
+
+    <header class="job-site-container">
+        <div class="job-header">
+            <a href="#" class="job-logo">JobFinder</a>
+            <nav class="job-nav">
+                <a href="#">求人を探す</a>
+                <a href="#">転職ノウハウ</a>
+                <a href="#">イベント</a>
+            </nav>
+            <div class="job-header-buttons">
+                <button class="login-btn">ログイン</button>
+                <button class="register-btn">会員登録</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="job-site-container">
+        <section class="search-area">
+            <h1>新しい「はたらく」を見つけよう。</h1>
+            <div class="search-box">
+                <input type="text" class="keyword-input" placeholder="キーワード、職種、会社名など">
+                <input type="text" class="location-input" placeholder="勤務地">
+                <button class="search-btn">検索</button>
+            </div>
+        </section>
+
+        <section class="job-list-section">
+            <h2>新着求人</h2>
+            <div id="job-list">
+                <!-- 求人カードはjob-site.jsによってここに挿入されます -->
+            </div>
+        </section>
+    </main>
+
+    <script src="job-site.js"></script>
+</body>
+</html>

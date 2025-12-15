@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主な機能 - Gemini CLI Agent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo-link"><div class="logo">GEMINI-CLI</div></a>
+            <div class="nav-links">
+                <a href="index.html">概要</a>
+                <a href="features.html" class="active">機能</a>
+                <a href="tools.html">ツール</a>
+                <a href="game.html">ゲーム</a>
+                <a href="job-site.html">求人サイト(例)</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="features" class="container">
+            <h2>主な機能</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="material-icons">code</span>
+                    <h3>ソフトウェア開発</h3>
+                    <p>バグ修正、機能追加、リファクタリング、テスト作成などを、プロジェクトの規約に合わせて行います。</p>
+                    <div class="example">
+                        <div class="example-title">例：複雑な条件分岐のリファクタリング</div>
+                        <pre><code>// Before
+if (user.role === 'admin' || user.role === 'editor') {
+    // ... do something
+}
+
+// After
+const canEdit = ['admin', 'editor'].includes(user.role);
+if (canEdit) {
+    // ... do something
+}</code></pre>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="material-icons">analytics</span>
+                    <h3>コードベース分析</h3>
+                    <p>専門ツールを使い、複雑なコードベースの構造理解、アーキテクチャの可視化、依存関係の解析を行います。</p>
+                    <div class="example">
+                        <div class="example-title">例：プロジェクトのエントリーポイントを調査</div>
+                        <pre><code># ユーザーからの指示
+"このプロジェクトのエントリーポイントはどこ？どうやって起動するの？"
+
+# 私が実行するツール
+codebase_investigator(
+  objective="Find the entry point of the application."
+)</code></pre>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="material-icons">description</span>
+                    <h3>ファイル操作</h3>
+                    <p>ファイルの読み書き、検索、そして正確なテキスト置換まで、様々なファイル操作を実行します。</p>
+                    <div class="example">
+                        <div class="example-title">例：設定ファイル内のバージョン更新</div>
+                        <pre><code># 指示
+"package.jsonのreactのバージョンを18.2.0に更新して"
+
+# 私が実行するツール
+replace(
+  file_path='package.json',
+  old_string='"react": "18.1.0"',
+  new_string='"react": "18.2.0"'
+)</code></pre>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="material-icons">terminal</span>
+                    <h3>コマンド実行</h3>
+                    <p>テストの実行、プロジェクトのビルド、あるいはその他の必要なタスクのために、シェルコマンドを実行します。</p>
+                    <div class="example">
+                        <div class="example-title">例：プロジェクトのテストを実行</div>
+                        <pre><code># 指示
+"ユニットテストを実行して結果を教えて"
+
+# 私が実行するツール
+run_shell_command(
+  command='npm test'
+)</code></pre>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="material-icons">travel_explore</span>
+                    <h3>Webリサーチ</h3>
+                    <p>Web検索を行い、情報収集、ドキュメントの検索、または問題の解決策を調査します。</p>
+                    <div class="example">
+                        <div class="example-title">例：ライブラリの公式ドキュメントを検索</div>
+                        <pre><code># 指示
+"Reactの公式サイトで`useEffect`の使い方を調べて"
+
+# 私が実行するツール
+google_web_search(
+  query='React useEffect official docs'
+)</code></pre>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="material-icons">checklist</span>
+                    <h3>タスク管理</h3>
+                    <p>複雑なリクエストを計画に分解し、TODOリストで進捗を管理します。</p>
+                    <div class="example">
+                        <div class="example-title">例：新規プロジェクトのセットアップ</div>
+                        <pre><code># 指示
+"Reactで新しいWebアプリを作って"
+
+# 私が作成するTodoリスト
+1. ViteでReactプロジェクトを初期化
+2. UIコンポーネントを設計・実装
+3. API通信サービスを実装
+4. ...</code></pre>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="material-icons">sports_esports</span>
+                    <h3>インタラクティブなアプリ開発</h3>
+                    <p>JavaScript等を使い、ブラウザで動作するゲーム等のインタラクティブなアプリケーションを構築します。</p>
+                    <div class="example">
+                        <div class="example-title">例：ブロック崩しゲームの実装</div>
+                        <pre><code>// 1. Canvasでゲーム画面を準備
+// 2. ボール、パドル、ブロックを描画
+// 3. 衝突判定ロジックを実装
+// 4. ユーザー操作を処理
+
+// → 実例として実装したものがこちらです！</code></pre>
+                        <a href="game.html" class="cta-button" style="margin-top: 15px; display: inline-block;">ゲームで遊ぶ</a>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="material-icons">web</span>
+                    <h3>Webサイト模写開発</h3>
+                    <p>既存サイトを参考に、HTML/CSS/JSを駆使してデザインと機能性を再現したWebページを構築します。</p>
+                    <div class="example">
+                        <div class="example-title">例：求人情報サイトの模写</div>
+                        <pre><code>// 1. サイトのレイアウト分析
+// 2. CSSで主要コンポーネントをスタイリング
+// 3. JSでダミーデータを動的描画
+// 4. レスポンシブ対応
+
+// → 実例として作成したサイトがこちらです！</code></pre>
+                        <a href="job-site.html" class="cta-button" style="margin-top: 15px; display: inline-block;">サイトを見る</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Gemini CLI Agent. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

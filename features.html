@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>機能一覧 - Claude Code</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="nav-logo-icon">🤖</span>
+                <span class="nav-logo-text">Claude Code</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">ホーム</a></li>
+                <li><a href="features.html" class="nav-link active">機能一覧</a></li>
+                <li><a href="examples.html" class="nav-link">実例</a></li>
+                <li><a href="quickstart.html" class="nav-link">始め方</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>機能一覧</h1>
+        <p>Claude Codeができること</p>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+        <div class="features-detail-grid">
+
+            <div class="feature-detail-card">
+                <div class="feature-detail-icon">📝</div>
+                <div class="feature-detail-content">
+                    <h3>コード編集・作成</h3>
+                    <p>ファイルの読み取り、編集、新規作成を行います。既存コードを理解した上で、適切な修正を提案・実行します。</p>
+                    <ul>
+                        <li>既存コードの修正・リファクタリング</li>
+                        <li>新機能の実装</li>
+                        <li>バグ修正</li>
+                        <li>コードレビュー・改善提案</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-detail-card">
+                <div class="feature-detail-icon">🔍</div>
+                <div class="feature-detail-content">
+                    <h3>コードベース探索</h3>
+                    <p>プロジェクト全体を検索・分析し、コードの構造や依存関係を把握します。</p>
+                    <ul>
+                        <li>ファイル検索（Glob パターン）</li>
+                        <li>コード内テキスト検索（Grep）</li>
+                        <li>コード構造の理解</li>
+                        <li>依存関係の分析</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-detail-card">
+                <div class="feature-detail-icon">🔧</div>
+                <div class="feature-detail-content">
+                    <h3>Bash コマンド実行</h3>
+                    <p>ターミナルコマンドを実行し、開発ワークフローを自動化します。</p>
+                    <ul>
+                        <li>ビルド・テストの実行</li>
+                        <li>パッケージ管理（npm, pip, cargo等）</li>
+                        <li>Docker操作</li>
+                        <li>システムコマンド</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-detail-card">
+                <div class="feature-detail-icon">📊</div>
+                <div class="feature-detail-content">
+                    <h3>Git 操作</h3>
+                    <p>バージョン管理をサポートし、コミットやPR作成を効率化します。</p>
+                    <ul>
+                        <li>コミット作成（適切なメッセージ付き）</li>
+                        <li>ブランチ管理</li>
+                        <li>プルリクエスト作成</li>
+                        <li>差分確認・マージ</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-detail-card">
+                <div class="feature-detail-icon">🌐</div>
+                <div class="feature-detail-content">
+                    <h3>Web 検索・情報取得</h3>
+                    <p>最新情報を取得して、ドキュメントやライブラリの情報を活用します。</p>
+                    <ul>
+                        <li>Web検索で最新情報を取得</li>
+                        <li>WebページのコンテンツをFetch</li>
+                        <li>公式ドキュメント参照</li>
+                        <li>API情報の調査</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-detail-card">
+                <div class="feature-detail-icon">📋</div>
+                <div class="feature-detail-content">
+                    <h3>タスク管理</h3>
+                    <p>複雑なタスクを整理・追跡し、進捗を可視化します。</p>
+                    <ul>
+                        <li>ToDoリスト作成・管理</li>
+                        <li>進捗状況の追跡</li>
+                        <li>タスクの分解・計画</li>
+                        <li>マルチステップ作業の管理</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-detail-card">
+                <div class="feature-detail-icon">🤝</div>
+                <div class="feature-detail-content">
+                    <h3>並列処理</h3>
+                    <p>複数のタスクを同時に実行し、作業効率を最大化します。</p>
+                    <ul>
+                        <li>複数ファイルの同時読み取り</li>
+                        <li>並列検索の実行</li>
+                        <li>バックグラウンドタスク</li>
+                        <li>エージェントの並列起動</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-detail-card">
+                <div class="feature-detail-icon">📓</div>
+                <div class="feature-detail-content">
+                    <h3>Jupyter Notebook</h3>
+                    <p>データ分析ノートブックの編集をサポートします。</p>
+                    <ul>
+                        <li>セルの追加・編集・削除</li>
+                        <li>コード・マークダウンセル</li>
+                        <li>出力の確認</li>
+                        <li>データ分析サポート</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-detail-card">
+                <div class="feature-detail-icon">💡</div>
+                <div class="feature-detail-content">
+                    <h3>インタラクティブ支援</h3>
+                    <p>対話的に開発をサポートし、最適な実装方針を一緒に検討します。</p>
+                    <ul>
+                        <li>質問への回答・説明</li>
+                        <li>選択肢の提示</li>
+                        <li>実装方針の相談</li>
+                        <li>プランニングモード</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section">
+        <h2 class="section-title">実際の使用例を見る</h2>
+        <p class="section-subtitle">各機能の具体的な使い方をチェック</p>
+        <a href="examples.html" class="cta-button large">実例を見る</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span>🤖</span> Claude Code
+            </div>
+            <p>Powered by Claude Opus 4.5 | Anthropic</p>
+            <div class="footer-links">
+                <a href="https://github.com/anthropics/claude-code">GitHub</a>
+                <a href="https://docs.anthropic.com">Documentation</a>
+            </div>
+            <div class="footer-related">
+                <span>Related:</span>
+                <a href="gemini-cli/index.html">✨ Gemini CLI</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

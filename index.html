@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code - AI開発アシスタント</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="nav-logo-icon">🤖</span>
+                <span class="nav-logo-text">Claude Code</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link active">ホーム</a></li>
+                <li><a href="features.html" class="nav-link">機能一覧</a></li>
+                <li><a href="examples.html" class="nav-link">実例</a></li>
+                <li><a href="quickstart.html" class="nav-link">始め方</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="logo">🤖</div>
+            <h1>Claude Code</h1>
+            <p>Anthropic公式のAI開発アシスタント。コーディング、ファイル操作、Git管理など、あらゆる開発タスクをサポートします。</p>
+            <div class="hero-buttons">
+                <a href="quickstart.html" class="cta-button">始める</a>
+                <a href="features.html" class="cta-button secondary">機能を見る</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="section">
+        <h2 class="section-title">主な機能</h2>
+        <p class="section-subtitle">開発ワークフローを強力にサポート</p>
+
+        <div class="features-grid compact">
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h3>コード編集</h3>
+                <p>ファイルの読み取り、編集、作成をサポート</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>コード検索</h3>
+                <p>プロジェクト全体を検索・分析</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <h3>コマンド実行</h3>
+                <p>ビルド、テスト、パッケージ管理</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Git 操作</h3>
+                <p>コミット、PR作成、ブランチ管理</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3>Web 検索</h3>
+                <p>最新情報・ドキュメントを取得</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📋</div>
+                <h3>タスク管理</h3>
+                <p>複雑なタスクを整理・追跡</p>
+            </div>
+        </div>
+
+        <div class="section-cta">
+            <a href="features.html" class="cta-button secondary">すべての機能を見る</a>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="section bg-gradient">
+        <h2 class="section-title">使用イメージ</h2>
+        <p class="section-subtitle">自然言語で指示するだけ</p>
+
+        <div class="terminal demo-terminal">
+            <div class="terminal-header">
+                <div class="terminal-dot red"></div>
+                <div class="terminal-dot yellow"></div>
+                <div class="terminal-dot green"></div>
+                <span class="terminal-title">claude-code</span>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-line">
+                    <span class="prompt-user">User:</span>
+                    <span class="command"> テストを実行してエラーがあれば修正して</span>
+                </div>
+                <hr class="divider">
+                <div class="terminal-line">
+                    <span class="prompt">Claude:</span>
+                    <span class="output"> テストを実行します。</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output-info">$ npm test</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output-removed">FAIL src/services/auth.test.ts</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">問題を発見しました。修正します...</span>
+                </div>
+                <div class="code-diff">
+                    <span class="diff-remove">- return bcrypt.hash(password, 10);</span>
+                    <span class="diff-add">+ return await bcrypt.hash(password, 10);</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output-success">✓ All tests passed!</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-cta">
+            <a href="examples.html" class="cta-button">もっと実例を見る</a>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section">
+        <h2 class="section-title">今すぐ始めよう</h2>
+        <p class="section-subtitle">npmで簡単インストール</p>
+
+        <div class="install-command">
+            <code>npm install -g @anthropic-ai/claude-code</code>
+        </div>
+
+        <a href="quickstart.html" class="cta-button large">セットアップガイドを見る</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span>🤖</span> Claude Code
+            </div>
+            <p>Powered by Claude Opus 4.5 | Anthropic</p>
+            <div class="footer-links">
+                <a href="https://github.com/anthropics/claude-code">GitHub</a>
+                <a href="https://docs.anthropic.com">Documentation</a>
+            </div>
+            <div class="footer-related">
+                <span>Related:</span>
+                <a href="gemini-cli/index.html">✨ Gemini CLI</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobNavi（ジョブナビ）- 転職・求人情報サイト</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* JobNavi Custom Styles */
+        :root {
+            --job-primary: #0066cc;
+            --job-primary-dark: #004999;
+            --job-accent: #ff6b00;
+            --job-bg: #f5f7fa;
+            --job-white: #ffffff;
+            --job-text: #333333;
+            --job-text-light: #666666;
+            --job-border: #e0e4e8;
+        }
+
+        .jobsite-body {
+            background: var(--job-bg);
+            color: var(--job-text);
+            font-family: 'Hiragino Kaku Gothic ProN', 'メイリオ', sans-serif;
+            padding-top: var(--nav-height);
+        }
+
+        /* Header */
+        .job-header {
+            background: var(--job-white);
+            border-bottom: 1px solid var(--job-border);
+            padding: 0.75rem 0;
+        }
+
+        .job-header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .job-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .job-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--job-primary), var(--job-accent));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .job-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--job-primary);
+        }
+
+        .job-logo-text span {
+            color: var(--job-accent);
+        }
+
+        .job-header-nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .job-header-link {
+            color: var(--job-text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .job-header-link:hover {
+            color: var(--job-primary);
+        }
+
+        .job-header-btn {
+            padding: 0.5rem 1.25rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .job-btn-login {
+            color: var(--job-primary);
+            border: 1px solid var(--job-primary);
+            background: transparent;
+        }
+
+        .job-btn-login:hover {
+            background: var(--job-primary);
+            color: white;
+        }
+
+        .job-btn-register {
+            background: var(--job-accent);
+            color: white;
+            border: 1px solid var(--job-accent);
+        }
+
+        .job-btn-register:hover {
+            background: #e55f00;
+        }
+
+        /* Hero Search Section */
+        .job-hero {
+            background: linear-gradient(135deg, var(--job-primary) 0%, #0088ee 100%);
+            padding: 3rem 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .job-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .job-hero-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .job-hero h1 {
+            color: white;
+            font-size: 1.75rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .job-hero-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .job-count {
+            background: rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            color: white;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .job-count strong {
+            font-size: 1.5rem;
+            color: #ffdd00;
+        }
+
+        /* Search Box */
+        .job-search-box {
+            background: var(--job-white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .job-search-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .job-search-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .job-search-label {
+            font-size: 0.8rem;
+            color: var(--job-text-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .job-search-input {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--job-border);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .job-search-input:focus {
+            outline: none;
+            border-color: var(--job-primary);
+        }
+
+        .job-search-btn {
+            padding: 0.75rem 2rem;
+            background: var(--job-accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            align-self: flex-end;
+        }
+
+        .job-search-btn:hover {
+            background: #e55f00;
+        }
+
+        .job-search-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .job-search-tag {
+            padding: 0.35rem 0.75rem;
+            background: var(--job-bg);
+            border: 1px solid var(--job-border);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--job-text-light);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .job-search-tag:hover {
+            border-color: var(--job-primary);
+            color: var(--job-primary);
+        }
+
+        /* Main Content */
+        .job-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Category Section */
+        .job-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .job-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .job-section-title {
+            font-size: 1.25rem;
+            color: var(--job-text);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .job-section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--job-primary);
+            border-radius: 2px;
+        }
+
+        .job-section-link {
+            color: var(--job-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .job-section-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Category Grid */
+        .job-category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .job-category-card {
+            background: var(--job-white);
+            border: 1px solid var(--job-border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-decoration: none;
+            color: var(--job-text);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .job-category-card:hover {
+            border-color: var(--job-primary);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .job-category-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #e8f4ff, #d0e8ff);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .job-category-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .job-category-count {
+            font-size: 0.8rem;
+            color: var(--job-text-light);
+        }
+
+        .job-category-count strong {
+            color: var(--job-accent);
+        }
+
+        /* Featured Jobs */
+        .job-featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1rem;
+        }
+
+        .job-card {
+            background: var(--job-white);
+            border: 1px solid var(--job-border);
+            border-radius: 10px;
+            padding: 1.25rem;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .job-card:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-card-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .badge-new {
+            background: #fff0e6;
+            color: var(--job-accent);
+        }
+
+        .badge-pickup {
+            background: #e6f7ff;
+            color: var(--job-primary);
+        }
+
+        .job-card-company {
+            font-size: 0.85rem;
+            color: var(--job-text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .job-card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--job-text);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .job-card-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .job-card-title a:hover {
+            color: var(--job-primary);
+        }
+
+        .job-card-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.75rem;
+        }
+
+        .job-card-tag {
+            padding: 0.2rem 0.5rem;
+            background: var(--job-bg);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--job-text-light);
+        }
+
+        .job-card-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            font-size: 0.85rem;
+            color: var(--job-text-light);
+        }
+
+        .job-card-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .job-card-salary {
+            color: var(--job-accent);
+            font-weight: 600;
+        }
+
+        /* Area Section */
+        .job-area-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .job-area-link {
+            background: var(--job-white);
+            border: 1px solid var(--job-border);
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            color: var(--job-text);
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .job-area-link:hover {
+            border-color: var(--job-primary);
+            color: var(--job-primary);
+        }
+
+        .job-area-link span {
+            font-size: 0.8rem;
+            color: var(--job-text-light);
+        }
+
+        /* Banner Section */
+        .job-banner-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .job-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .job-banner:hover {
+            transform: translateY(-3px);
+        }
+
+        .job-banner.orange {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .job-banner.green {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .job-banner h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .job-banner p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .job-footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 1rem 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .job-footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .job-footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .job-footer-section h5 {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .job-footer-section ul {
+            list-style: none;
+        }
+
+        .job-footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .job-footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        .job-footer-section a:hover {
+            color: white;
+        }
+
+        .job-footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .job-footer-copy {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .job-footer-demo {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .job-footer-demo a {
+            color: #22d3ee;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .job-header-nav {
+                display: none;
+            }
+
+            .job-hero h1 {
+                font-size: 1.35rem;
+            }
+
+            .job-search-row {
+                grid-template-columns: 1fr;
+            }
+
+            .job-search-btn {
+                width: 100%;
+            }
+
+            .job-featured-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="jobsite-body">
+    <!-- Claude Code Navigation (実例としてのリンク) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="nav-logo-icon">🤖</span>
+                <span class="nav-logo-text">Claude Code</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">ホーム</a></li>
+                <li><a href="features.html" class="nav-link">機能一覧</a></li>
+                <li><a href="examples.html" class="nav-link">実例</a></li>
+                <li><a href="quickstart.html" class="nav-link">始め方</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Demo Notice -->
+    <div style="background: linear-gradient(90deg, var(--primary), var(--secondary)); color: white; text-align: center; padding: 0.5rem; font-size: 0.85rem;">
+        🎨 これはClaude Codeが作成した架空の求人サイトデモです
+        <a href="examples.html" style="color: #22d3ee; margin-left: 0.5rem;">← 実例一覧に戻る</a>
+    </div>
+
+    <!-- Job Site Header -->
+    <header class="job-header">
+        <div class="job-header-container">
+            <a href="#" class="job-logo">
+                <div class="job-logo-icon">JN</div>
+                <div class="job-logo-text">Job<span>Navi</span></div>
+            </a>
+            <nav class="job-header-nav">
+                <a href="#" class="job-header-link">求人検索</a>
+                <a href="#" class="job-header-link">転職サポート</a>
+                <a href="#" class="job-header-link">企業情報</a>
+                <a href="#" class="job-header-link">転職ノウハウ</a>
+                <a href="#" class="job-header-btn job-btn-login">ログイン</a>
+                <a href="#" class="job-header-btn job-btn-register">無料会員登録</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Search -->
+    <section class="job-hero">
+        <div class="job-hero-container">
+            <div style="text-align: center;">
+                <span class="job-count">公開求人数 <strong>185,432</strong> 件</span>
+            </div>
+            <h1>あなたの理想の転職先を見つけよう</h1>
+            <p class="job-hero-subtitle">豊富な求人から、あなたにぴったりの仕事が見つかります</p>
+
+            <div class="job-search-box">
+                <div class="job-search-row">
+                    <div class="job-search-field">
+                        <label class="job-search-label">キーワード</label>
+                        <input type="text" class="job-search-input" placeholder="職種、会社名、スキルなど">
+                    </div>
+                    <div class="job-search-field">
+                        <label class="job-search-label">勤務地</label>
+                        <select class="job-search-input">
+                            <option>指定なし</option>
+                            <option>東京都</option>
+                            <option>神奈川県</option>
+                            <option>大阪府</option>
+                            <option>愛知県</option>
+                            <option>福岡県</option>
+                        </select>
+                    </div>
+                    <div class="job-search-field">
+                        <label class="job-search-label">職種</label>
+                        <select class="job-search-input">
+                            <option>すべての職種</option>
+                            <option>営業</option>
+                            <option>エンジニア</option>
+                            <option>マーケティング</option>
+                            <option>事務・管理</option>
+                            <option>デザイナー</option>
+                        </select>
+                    </div>
+                    <button class="job-search-btn">🔍 求人検索</button>
+                </div>
+                <div class="job-search-tags">
+                    <span class="job-search-tag">リモートワーク可</span>
+                    <span class="job-search-tag">未経験歓迎</span>
+                    <span class="job-search-tag">年収500万以上</span>
+                    <span class="job-search-tag">土日祝休み</span>
+                    <span class="job-search-tag">フレックス制</span>
+                    <span class="job-search-tag">上場企業</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="job-main">
+        <!-- Category Section -->
+        <section class="job-section">
+            <div class="job-section-header">
+                <h2 class="job-section-title">職種から探す</h2>
+                <a href="#" class="job-section-link">すべての職種を見る →</a>
+            </div>
+            <div class="job-category-grid">
+                <a href="#" class="job-category-card">
+                    <div class="job-category-icon">💼</div>
+                    <div class="job-category-info">
+                        <h4>営業</h4>
+                        <span class="job-category-count"><strong>28,543</strong> 件</span>
+                    </div>
+                </a>
+                <a href="#" class="job-category-card">
+                    <div class="job-category-icon">💻</div>
+                    <div class="job-category-info">
+                        <h4>ITエンジニア</h4>
+                        <span class="job-category-count"><strong>42,187</strong> 件</span>
+                    </div>
+                </a>
+                <a href="#" class="job-category-card">
+                    <div class="job-category-icon">📊</div>
+                    <div class="job-category-info">
+                        <h4>マーケティング</h4>
+                        <span class="job-category-count"><strong>12,876</strong> 件</span>
+                    </div>
+                </a>
+                <a href="#" class="job-category-card">
+                    <div class="job-category-icon">📝</div>
+                    <div class="job-category-info">
+                        <h4>事務・管理</h4>
+                        <span class="job-category-count"><strong>35,291</strong> 件</span>
+                    </div>
+                </a>
+                <a href="#" class="job-category-card">
+                    <div class="job-category-icon">🎨</div>
+                    <div class="job-category-info">
+                        <h4>クリエイティブ</h4>
+                        <span class="job-category-count"><strong>8,432</strong> 件</span>
+                    </div>
+                </a>
+                <a href="#" class="job-category-card">
+                    <div class="job-category-icon">🏥</div>
+                    <div class="job-category-info">
+                        <h4>医療・福祉</h4>
+                        <span class="job-category-count"><strong>15,678</strong> 件</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Featured Jobs -->
+        <section class="job-section">
+            <div class="job-section-header">
+                <h2 class="job-section-title">注目の求人</h2>
+                <a href="#" class="job-section-link">もっと見る →</a>
+            </div>
+            <div class="job-featured-grid">
+                <div class="job-card">
+                    <span class="job-card-badge badge-new">NEW</span>
+                    <p class="job-card-company">株式会社テックイノベーション</p>
+                    <h3 class="job-card-title"><a href="#">フロントエンドエンジニア【React/TypeScript】リモートワーク可</a></h3>
+                    <div class="job-card-tags">
+                        <span class="job-card-tag">正社員</span>
+                        <span class="job-card-tag">リモート可</span>
+                        <span class="job-card-tag">フレックス</span>
+                    </div>
+                    <div class="job-card-details">
+                        <div class="job-card-detail">📍 東京都渋谷区（リモート可）</div>
+                        <div class="job-card-detail job-card-salary">💰 年収 500万円 〜 900万円</div>
+                    </div>
+                </div>
+
+                <div class="job-card">
+                    <span class="job-card-badge badge-pickup">PICKUP</span>
+                    <p class="job-card-company">グローバルコンサルティング株式会社</p>
+                    <h3 class="job-card-title"><a href="#">経営コンサルタント【未経験歓迎】研修制度充実</a></h3>
+                    <div class="job-card-tags">
+                        <span class="job-card-tag">正社員</span>
+                        <span class="job-card-tag">未経験可</span>
+                        <span class="job-card-tag">研修充実</span>
+                    </div>
+                    <div class="job-card-details">
+                        <div class="job-card-detail">📍 東京都千代田区</div>
+                        <div class="job-card-detail job-card-salary">💰 年収 450万円 〜 800万円</div>
+                    </div>
+                </div>
+
+                <div class="job-card">
+                    <span class="job-card-badge badge-new">NEW</span>
+                    <p class="job-card-company">ヘルスケアテクノロジー株式会社</p>
+                    <h3 class="job-card-title"><a href="#">プロダクトマネージャー【医療×IT】急成長スタートアップ</a></h3>
+                    <div class="job-card-tags">
+                        <span class="job-card-tag">正社員</span>
+                        <span class="job-card-tag">ストックオプション</span>
+                    </div>
+                    <div class="job-card-details">
+                        <div class="job-card-detail">📍 東京都港区</div>
+                        <div class="job-card-detail job-card-salary">💰 年収 600万円 〜 1,200万円</div>
+                    </div>
+                </div>
+
+                <div class="job-card">
+                    <p class="job-card-company">デジタルマーケティング株式会社</p>
+                    <h3 class="job-card-title"><a href="#">デジタルマーケター【広告運用】年間休日125日</a></h3>
+                    <div class="job-card-tags">
+                        <span class="job-card-tag">正社員</span>
+                        <span class="job-card-tag">土日祝休み</span>
+                        <span class="job-card-tag">副業OK</span>
+                    </div>
+                    <div class="job-card-details">
+                        <div class="job-card-detail">📍 大阪府大阪市</div>
+                        <div class="job-card-detail job-card-salary">💰 年収 400万円 〜 650万円</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Area Section -->
+        <section class="job-section">
+            <div class="job-section-header">
+                <h2 class="job-section-title">エリアから探す</h2>
+                <a href="#" class="job-section-link">すべてのエリアを見る →</a>
+            </div>
+            <div class="job-area-grid">
+                <a href="#" class="job-area-link">東京都 <span>65,432件</span></a>
+                <a href="#" class="job-area-link">神奈川県 <span>18,765件</span></a>
+                <a href="#" class="job-area-link">大阪府 <span>24,321件</span></a>
+                <a href="#" class="job-area-link">愛知県 <span>15,678件</span></a>
+                <a href="#" class="job-area-link">福岡県 <span>12,345件</span></a>
+                <a href="#" class="job-area-link">北海道 <span>8,901件</span></a>
+                <a href="#" class="job-area-link">京都府 <span>7,654件</span></a>
+                <a href="#" class="job-area-link">兵庫県 <span>9,876件</span></a>
+            </div>
+        </section>
+
+        <!-- Banner Section -->
+        <section class="job-section">
+            <div class="job-section-header">
+                <h2 class="job-section-title">転職をサポート</h2>
+            </div>
+            <div class="job-banner-grid">
+                <a href="#" class="job-banner">
+                    <h4>📋 履歴書・職務経歴書の書き方</h4>
+                    <p>採用担当者に響く書類作成のコツを伝授</p>
+                </a>
+                <a href="#" class="job-banner orange">
+                    <h4>💬 転職エージェントに相談</h4>
+                    <p>プロのアドバイザーがあなたの転職を無料サポート</p>
+                </a>
+                <a href="#" class="job-banner green">
+                    <h4>📊 年収診断・適職診断</h4>
+                    <p>あなたの市場価値と適性をチェック</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Job Site Footer -->
+    <footer class="job-footer">
+        <div class="job-footer-container">
+            <div class="job-footer-grid">
+                <div class="job-footer-section">
+                    <h5>求人を探す</h5>
+                    <ul>
+                        <li><a href="#">職種から探す</a></li>
+                        <li><a href="#">エリアから探す</a></li>
+                        <li><a href="#">業界から探す</a></li>
+                        <li><a href="#">こだわり条件から探す</a></li>
+                    </ul>
+                </div>
+                <div class="job-footer-section">
+                    <h5>転職サポート</h5>
+                    <ul>
+                        <li><a href="#">転職エージェント</a></li>
+                        <li><a href="#">スカウトサービス</a></li>
+                        <li><a href="#">転職ノウハウ</a></li>
+                        <li><a href="#">年収査定</a></li>
+                    </ul>
+                </div>
+                <div class="job-footer-section">
+                    <h5>会員サービス</h5>
+                    <ul>
+                        <li><a href="#">新規会員登録</a></li>
+                        <li><a href="#">ログイン</a></li>
+                        <li><a href="#">マイページ</a></li>
+                        <li><a href="#">お気に入り求人</a></li>
+                    </ul>
+                </div>
+                <div class="job-footer-section">
+                    <h5>JobNaviについて</h5>
+                    <ul>
+                        <li><a href="#">運営会社</a></li>
+                        <li><a href="#">利用規約</a></li>
+                        <li><a href="#">プライバシーポリシー</a></li>
+                        <li><a href="#">お問い合わせ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="job-footer-bottom">
+                <p class="job-footer-copy">© 2024 JobNavi - これは架空の求人サイトです</p>
+                <div class="job-footer-demo">
+                    🤖 <a href="examples.html">Claude Codeで作成されたデモ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

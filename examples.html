@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>実例 - Claude Code</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="nav-logo-icon">🤖</span>
+                <span class="nav-logo-text">Claude Code</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">ホーム</a></li>
+                <li><a href="features.html" class="nav-link">機能一覧</a></li>
+                <li><a href="examples.html" class="nav-link active">実例</a></li>
+                <li><a href="quickstart.html" class="nav-link">始め方</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>実例で見る機能紹介</h1>
+        <p>実際の使用シーンをターミナル形式でご紹介</p>
+    </section>
+
+    <!-- Examples Filter -->
+    <section class="section">
+        <div class="example-filter">
+            <button class="filter-btn active" data-filter="all">すべて</button>
+            <button class="filter-btn" data-filter="code">コード編集</button>
+            <button class="filter-btn" data-filter="search">検索</button>
+            <button class="filter-btn" data-filter="git">Git</button>
+            <button class="filter-btn" data-filter="game">ゲーム</button>
+            <button class="filter-btn" data-filter="web">Webサイト</button>
+            <button class="filter-btn" data-filter="other">その他</button>
+        </div>
+    </section>
+
+    <!-- Examples -->
+    <section class="section examples-section">
+        <div class="example-container">
+
+            <!-- 1. コード編集・作成 -->
+            <div class="example-block" data-category="code">
+                <div class="example-header">
+                    <div class="example-icon">📝</div>
+                    <div>
+                        <div class="example-title">コード編集・作成</div>
+                        <div class="example-desc">既存のコードを読み取り、バグ修正や機能追加を行います</div>
+                    </div>
+                </div>
+
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <span class="terminal-title">claude-code</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">
+                            <span class="prompt-user">User:</span>
+                            <span class="command"> validateEmail関数にバグがあるみたい。修正して</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="prompt">Claude:</span>
+                            <span class="output"> src/utils/validation.ts を読み取ります。</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output">問題を発見しました。正規表現が不完全で、サブドメイン付きのメールアドレスを</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output">正しく検証できていません。修正します。</span>
+                        </div>
+                        <div class="code-diff">
+                            <div class="diff-file">src/utils/validation.ts</div>
+                            <span class="diff-remove">- const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-z]+$/;</span>
+                            <span class="diff-add">+ const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-success">✓ 修正完了しました。user.name@mail.example.com のような</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-success">  アドレスも正しく検証できるようになりました。</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. コードベース探索 -->
+            <div class="example-block" data-category="search">
+                <div class="example-header">
+                    <div class="example-icon">🔍</div>
+                    <div>
+                        <div class="example-title">コードベース探索</div>
+                        <div class="example-desc">プロジェクト内のファイルやコードを検索・分析します</div>
+                    </div>
+                </div>
+
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <span class="terminal-title">claude-code</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">
+                            <span class="prompt-user">User:</span>
+                            <span class="command"> APIエンドポイントがどこで定義されているか探して</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="prompt">Claude:</span>
+                            <span class="output"> コードベースを探索します...</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-info">📂 Glob: **/routes/**/*.ts</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-file">  src/routes/api/users.ts</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-file">  src/routes/api/products.ts</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-file">  src/routes/api/orders.ts</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-info">📂 Grep: "router\.(get|post|put|delete)"</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-file">  src/routes/api/users.ts:15</span>
+                            <span class="output"> router.get('/users', ...)</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-file">  src/routes/api/users.ts:28</span>
+                            <span class="output"> router.post('/users', ...)</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-file">  src/routes/api/products.ts:12</span>
+                            <span class="output"> router.get('/products', ...)</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="output">APIエンドポイントは <span class="highlight">src/routes/api/</span> 配下で定義されています。</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output">Express Routerを使用し、計 <span class="output-number">12個</span> のエンドポイントがあります。</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Bashコマンド実行 -->
+            <div class="example-block" data-category="code">
+                <div class="example-header">
+                    <div class="example-icon">🔧</div>
+                    <div>
+                        <div class="example-title">Bash コマンド実行</div>
+                        <div class="example-desc">ビルド、テスト、パッケージ管理などを実行します</div>
+                    </div>
+                </div>
+
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <span class="terminal-title">claude-code</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">
+                            <span class="prompt-user">User:</span>
+                            <span class="command"> テストを実行してエラーがあれば修正して</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="prompt">Claude:</span>
+                            <span class="output"> テストを実行します。</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-info">$ npm test</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output">PASS src/utils/format.test.ts</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output">PASS src/utils/validation.test.ts</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-removed">FAIL src/services/auth.test.ts</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-removed">  ✕ should hash password correctly (15ms)</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-removed">    Expected: "$2b$10$..."</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-removed">    Received: undefined</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="output">auth.service.ts を確認します...</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output">問題を発見: hashPassword関数がPromiseを返すのに await がありません。</span>
+                        </div>
+                        <div class="code-diff">
+                            <div class="diff-file">src/services/auth.service.ts:24</div>
+                            <span class="diff-remove">- return bcrypt.hash(password, 10);</span>
+                            <span class="diff-add">+ return await bcrypt.hash(password, 10);</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-info">$ npm test</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-success">✓ All tests passed! (3 test suites, 24 tests)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Git操作 -->
+            <div class="example-block" data-category="git">
+                <div class="example-header">
+                    <div class="example-icon">📊</div>
+                    <div>
+                        <div class="example-title">Git 操作</div>
+                        <div class="example-desc">コミット作成やプルリクエストの作成をサポートします</div>
+                    </div>
+                </div>
+
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <span class="terminal-title">claude-code</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">
+                            <span class="prompt-user">User:</span>
+                            <span class="command"> 変更をコミットしてPRを作成して</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="prompt">Claude:</span>
+                            <span class="output"> 変更内容を確認します。</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-info">$ git status</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output">Changes not staged for commit:</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-warning">  modified: src/services/auth.service.ts</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-warning">  modified: src/utils/validation.ts</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-info">$ git diff</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-added">+2 files changed, 4 insertions(+), 2 deletions(-)</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="output">コミットを作成します。</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-info">$ git add . && git commit</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-success">✓ [fix/auth-validation a1b2c3d] Fix password hashing and email validation</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="output">PRを作成します。</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-info">$ gh pr create</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-success">✓ Created PR #142: Fix password hashing and email validation</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-file">  https://github.com/example/repo/pull/142</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Web検索 -->
+            <div class="example-block" data-category="other">
+                <div class="example-header">
+                    <div class="example-icon">🌐</div>
+                    <div>
+                        <div class="example-title">Web 検索・情報取得</div>
+                        <div class="example-desc">最新のドキュメントやライブラリ情報を取得します</div>
+                    </div>
+                </div>
+
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <span class="terminal-title">claude-code</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">
+                            <span class="prompt-user">User:</span>
+                            <span class="command"> Next.js 15の新機能について教えて</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="prompt">Claude:</span>
+                            <span class="output"> Web検索で最新情報を取得します...</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-info">🔍 検索: "Next.js 15 new features 2024"</span>
+                        </div>
+                        <div class="search-result">
+                            <div class="search-result-title">Next.js 15 Release Notes | Vercel</div>
+                            <div class="search-result-url">https://nextjs.org/blog/next-15</div>
+                            <div class="search-result-snippet">Next.js 15 introduces Partial Prerendering, improved caching, React 19 support...</div>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="output">Next.js 15の主な新機能:</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-success">• Partial Prerendering (PPR)</span>
+                            <span class="output"> - 静的・動的コンテンツの最適な組み合わせ</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-success">• React 19 サポート</span>
+                            <span class="output"> - Server Actions の安定版</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-success">• Turbopack</span>
+                            <span class="output"> - 開発サーバーの高速化</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-success">• キャッシュ改善</span>
+                            <span class="output"> - fetch のデフォルト動作変更</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. タスク管理 -->
+            <div class="example-block" data-category="other">
+                <div class="example-header">
+                    <div class="example-icon">📋</div>
+                    <div>
+                        <div class="example-title">タスク管理</div>
+                        <div class="example-desc">複雑なタスクをToDoリストで管理・追跡します</div>
+                    </div>
+                </div>
+
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <span class="terminal-title">claude-code</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">
+                            <span class="prompt-user">User:</span>
+                            <span class="command"> ユーザー認証機能を追加して。ログイン、登録、ログアウトが必要</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="prompt">Claude:</span>
+                            <span class="output"> タスクを整理してToDoリストを作成します。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="todo-list">
+                    <div class="todo-item">
+                        <div class="todo-checkbox completed">✓</div>
+                        <span class="todo-text completed">認証用のデータベーススキーマを作成</span>
+                        <span class="todo-status status-completed">完了</span>
+                    </div>
+                    <div class="todo-item">
+                        <div class="todo-checkbox completed">✓</div>
+                        <span class="todo-text completed">ユーザー登録APIを実装</span>
+                        <span class="todo-status status-completed">完了</span>
+                    </div>
+                    <div class="todo-item">
+                        <div class="todo-checkbox completed">✓</div>
+                        <span class="todo-text completed">ログインAPIを実装</span>
+                        <span class="todo-status status-completed">完了</span>
+                    </div>
+                    <div class="todo-item">
+                        <div class="todo-checkbox in-progress">◐</div>
+                        <span class="todo-text">ログアウトAPIを実装</span>
+                        <span class="todo-status status-in-progress">作業中</span>
+                    </div>
+                    <div class="todo-item">
+                        <div class="todo-checkbox"></div>
+                        <span class="todo-text">認証ミドルウェアを作成</span>
+                        <span class="todo-status status-pending">未着手</span>
+                    </div>
+                    <div class="todo-item">
+                        <div class="todo-checkbox"></div>
+                        <span class="todo-text">テストを作成して実行</span>
+                        <span class="todo-status status-pending">未着手</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. インタラクティブ支援 -->
+            <div class="example-block" data-category="other">
+                <div class="example-header">
+                    <div class="example-icon">💡</div>
+                    <div>
+                        <div class="example-title">インタラクティブ支援</div>
+                        <div class="example-desc">実装方針の確認や選択肢の提示を行います</div>
+                    </div>
+                </div>
+
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <span class="terminal-title">claude-code</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">
+                            <span class="prompt-user">User:</span>
+                            <span class="command"> このアプリにキャッシュを追加したい</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="prompt">Claude:</span>
+                            <span class="output"> キャッシュの実装方法について確認させてください。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-header">
+                        💭 どのキャッシュ方式を使用しますか?
+                    </div>
+                    <div class="question-options">
+                        <div class="question-option selected">
+                            <div class="option-radio selected"></div>
+                            <div>
+                                <strong>Redis (推奨)</strong>
+                                <div style="color: var(--text-muted); font-size: 0.85rem;">分散キャッシュ、本番環境向け、高パフォーマンス</div>
+                            </div>
+                        </div>
+                        <div class="question-option">
+                            <div class="option-radio"></div>
+                            <div>
+                                <strong>インメモリキャッシュ</strong>
+                                <div style="color: var(--text-muted); font-size: 0.85rem;">シンプル、外部依存なし、開発環境向け</div>
+                            </div>
+                        </div>
+                        <div class="question-option">
+                            <div class="option-radio"></div>
+                            <div>
+                                <strong>Memcached</strong>
+                                <div style="color: var(--text-muted); font-size: 0.85rem;">軽量、シンプルなキーバリューストア</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. 並列処理 -->
+            <div class="example-block" data-category="search">
+                <div class="example-header">
+                    <div class="example-icon">🤝</div>
+                    <div>
+                        <div class="example-title">並列処理</div>
+                        <div class="example-desc">複数のタスクを同時に実行して効率化します</div>
+                    </div>
+                </div>
+
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <span class="terminal-title">claude-code</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">
+                            <span class="prompt-user">User:</span>
+                            <span class="command"> プロジェクトの構造を理解したい。主要なファイルを読んで</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="prompt">Claude:</span>
+                            <span class="output"> 複数のファイルを並列で読み取ります...</span>
+                        </div>
+                        <div class="terminal-line parallel-files">
+                            <span class="output-info">📄 package.json</span>
+                            <span class="output-info">📄 tsconfig.json</span>
+                            <span class="output-info">📄 src/index.ts</span>
+                        </div>
+                        <div class="terminal-line parallel-files">
+                            <span class="output-info">📄 src/app.ts</span>
+                            <span class="output-info">📄 README.md</span>
+                            <span class="output-info">📄 .env.example</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-success">✓ 6ファイルを同時に読み取り完了</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="output">プロジェクト構造の概要:</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output">• <span class="highlight">TypeScript + Express</span> ベースのAPIサーバー</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output">• エントリーポイント: src/index.ts → src/app.ts</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output">• 主要な依存関係: express, prisma, jsonwebtoken</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. Jupyter Notebook -->
+            <div class="example-block" data-category="code">
+                <div class="example-header">
+                    <div class="example-icon">📓</div>
+                    <div>
+                        <div class="example-title">Jupyter Notebook</div>
+                        <div class="example-desc">データ分析ノートブックの編集をサポートします</div>
+                    </div>
+                </div>
+
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <span class="terminal-title">claude-code</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">
+                            <span class="prompt-user">User:</span>
+                            <span class="command"> analysis.ipynbにデータ可視化のセルを追加して</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="prompt">Claude:</span>
+                            <span class="output"> ノートブックを読み取ります...</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output">現在のセル構成を確認しました。可視化セルを追加します。</span>
+                        </div>
+                        <div class="code-diff">
+                            <div class="diff-file">analysis.ipynb - Cell [5] (新規追加)</div>
+                            <span class="diff-add">+ import matplotlib.pyplot as plt</span>
+                            <span class="diff-add">+ import seaborn as sns</span>
+                            <span class="diff-add">+ </span>
+                            <span class="diff-add">+ plt.figure(figsize=(10, 6))</span>
+                            <span class="diff-add">+ sns.heatmap(df.corr(), annot=True, cmap='coolwarm')</span>
+                            <span class="diff-add">+ plt.title('Feature Correlation Matrix')</span>
+                            <span class="diff-add">+ plt.show()</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-success">✓ セル[5]を追加しました。相関マトリックスのヒートマップを表示します。</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. ゲーム作成 -->
+            <div class="example-block" data-category="game">
+                <div class="example-header">
+                    <div class="example-icon">🎮</div>
+                    <div>
+                        <div class="example-title">ゲーム作成</div>
+                        <div class="example-desc">ブラウザで動くゲームも自然言語の指示だけで作成できます</div>
+                    </div>
+                </div>
+
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <span class="terminal-title">claude-code</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">
+                            <span class="prompt-user">User:</span>
+                            <span class="command"> ブロック崩しゲームを作って</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="prompt">Claude:</span>
+                            <span class="output"> ブロック崩しゲームを作成します。HTML5 Canvasを使用して実装します。</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-info">📄 game.html を作成中...</span>
+                        </div>
+                        <div class="code-diff">
+                            <div class="diff-file">game.html (新規作成)</div>
+                            <span class="diff-add">+ Canvas要素でゲーム画面を描画</span>
+                            <span class="diff-add">+ パドル操作（キーボード/マウス/タッチ対応）</span>
+                            <span class="diff-add">+ ボールの物理演算と衝突判定</span>
+                            <span class="diff-add">+ カラフルなブロック配置</span>
+                            <span class="diff-add">+ スコア・ライフ・レベル管理</span>
+                            <span class="diff-add">+ レスポンシブデザイン</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-success">✓ ゲームを作成しました！</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Preview Card -->
+                <div class="game-preview-card">
+                    <div class="game-preview-header">
+                        <span class="game-preview-badge">🕹️ 実際に遊べます</span>
+                        <h4>ブロック崩し</h4>
+                    </div>
+                    <div class="game-preview-features">
+                        <span class="game-feature">⌨️ キーボード操作</span>
+                        <span class="game-feature">🖱️ マウス操作</span>
+                        <span class="game-feature">📱 タッチ対応</span>
+                        <span class="game-feature">🎯 レベルシステム</span>
+                    </div>
+                    <a href="game.html" class="game-play-btn">ゲームをプレイする →</a>
+                </div>
+            </div>
+
+            <!-- 11. Webサイト作成 -->
+            <div class="example-block" data-category="web">
+                <div class="example-header">
+                    <div class="example-icon">🌐</div>
+                    <div>
+                        <div class="example-title">Webサイト作成</div>
+                        <div class="example-desc">求人サイトやECサイトなど、本格的なWebページも作成できます</div>
+                    </div>
+                </div>
+
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <span class="terminal-title">claude-code</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">
+                            <span class="prompt-user">User:</span>
+                            <span class="command"> dodaを参考にした架空の求人サイトのTopページを作成して</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="terminal-line">
+                            <span class="prompt">Claude:</span>
+                            <span class="output"> 求人サイト「JobNavi」を作成します。</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-info">📄 jobsite.html を作成中...</span>
+                        </div>
+                        <div class="code-diff">
+                            <div class="diff-file">jobsite.html (新規作成)</div>
+                            <span class="diff-add">+ ヘッダー（ロゴ、ナビゲーション、ログイン/登録）</span>
+                            <span class="diff-add">+ 求人検索フォーム（キーワード、勤務地、職種）</span>
+                            <span class="diff-add">+ 人気の検索タグ</span>
+                            <span class="diff-add">+ 職種カテゴリグリッド（求人件数付き）</span>
+                            <span class="diff-add">+ 注目の求人カード（4件）</span>
+                            <span class="diff-add">+ エリア別求人リンク</span>
+                            <span class="diff-add">+ 転職サポートバナー</span>
+                            <span class="diff-add">+ フッター（各種リンク）</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="output-success">✓ 求人サイトを作成しました！</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Website Preview Card -->
+                <div class="game-preview-card" style="border-color: #0066cc;">
+                    <div class="game-preview-header">
+                        <span class="game-preview-badge" style="background: #0066cc;">🏢 架空の求人サイト</span>
+                        <h4>JobNavi（ジョブナビ）</h4>
+                    </div>
+                    <div class="game-preview-features">
+                        <span class="game-feature">🔍 検索フォーム</span>
+                        <span class="game-feature">📂 職種カテゴリ</span>
+                        <span class="game-feature">💼 求人カード</span>
+                        <span class="game-feature">📱 レスポンシブ</span>
+                    </div>
+                    <a href="jobsite.html" class="game-play-btn" style="background: linear-gradient(135deg, #0066cc, #0088ee);">サイトを見る →</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span>🤖</span> Claude Code
+            </div>
+            <p>Powered by Claude Opus 4.5 | Anthropic</p>
+            <div class="footer-links">
+                <a href="https://github.com/anthropics/claude-code">GitHub</a>
+                <a href="https://docs.anthropic.com">Documentation</a>
+            </div>
+            <div class="footer-related">
+                <span>Related:</span>
+                <a href="gemini-cli/index.html">✨ Gemini CLI</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

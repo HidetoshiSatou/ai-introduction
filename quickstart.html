@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>始め方 - Claude Code</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="nav-logo-icon">🤖</span>
+                <span class="nav-logo-text">Claude Code</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">ホーム</a></li>
+                <li><a href="features.html" class="nav-link">機能一覧</a></li>
+                <li><a href="examples.html" class="nav-link">実例</a></li>
+                <li><a href="quickstart.html" class="nav-link active">始め方</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>クイックスタート</h1>
+        <p>3ステップで始めよう</p>
+    </section>
+
+    <!-- Steps Section -->
+    <section class="section">
+        <div class="steps-container">
+
+            <!-- Step 1 -->
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>インストール</h3>
+                    <p>npmを使ってグローバルにインストールします。</p>
+                    <div class="terminal small">
+                        <div class="terminal-header">
+                            <div class="terminal-dot red"></div>
+                            <div class="terminal-dot yellow"></div>
+                            <div class="terminal-dot green"></div>
+                            <span class="terminal-title">terminal</span>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line">
+                                <span class="prompt">$</span>
+                                <span class="command"> npm install -g @anthropic-ai/claude-code</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-note">
+                        <strong>必要条件:</strong> Node.js 18以上
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>プロジェクトに移動</h3>
+                    <p>作業したいプロジェクトのディレクトリに移動します。</p>
+                    <div class="terminal small">
+                        <div class="terminal-header">
+                            <div class="terminal-dot red"></div>
+                            <div class="terminal-dot yellow"></div>
+                            <div class="terminal-dot green"></div>
+                            <span class="terminal-title">terminal</span>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line">
+                                <span class="prompt">$</span>
+                                <span class="command"> cd /path/to/your-project</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-note">
+                        <strong>Tip:</strong> Gitリポジトリ内で実行すると、Git機能もフル活用できます
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>起動</h3>
+                    <p>claudeコマンドを実行して対話を開始します。</p>
+                    <div class="terminal small">
+                        <div class="terminal-header">
+                            <div class="terminal-dot red"></div>
+                            <div class="terminal-dot yellow"></div>
+                            <div class="terminal-dot green"></div>
+                            <span class="terminal-title">terminal</span>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line">
+                                <span class="prompt">$</span>
+                                <span class="command"> claude</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="output-success">✓ Claude Code ready. How can I help?</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-note">
+                        <strong>初回起動時:</strong> Anthropic APIキーの設定が必要です
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Usage Examples Section -->
+    <section class="section bg-gradient">
+        <h2 class="section-title">基本的な使い方</h2>
+        <p class="section-subtitle">自然言語で指示するだけ</p>
+
+        <div class="usage-grid">
+            <div class="usage-card">
+                <div class="usage-icon">💬</div>
+                <h4>質問する</h4>
+                <p class="usage-example">"このプロジェクトの構造を教えて"</p>
+            </div>
+            <div class="usage-card">
+                <div class="usage-icon">🔧</div>
+                <h4>修正を依頼</h4>
+                <p class="usage-example">"この関数のバグを直して"</p>
+            </div>
+            <div class="usage-card">
+                <div class="usage-icon">✨</div>
+                <h4>機能追加</h4>
+                <p class="usage-example">"ログイン機能を追加して"</p>
+            </div>
+            <div class="usage-card">
+                <div class="usage-icon">🧪</div>
+                <h4>テスト実行</h4>
+                <p class="usage-example">"テストを実行して結果を教えて"</p>
+            </div>
+            <div class="usage-card">
+                <div class="usage-icon">📦</div>
+                <h4>コミット作成</h4>
+                <p class="usage-example">"変更をコミットして"</p>
+            </div>
+            <div class="usage-card">
+                <div class="usage-icon">🔍</div>
+                <h4>コード検索</h4>
+                <p class="usage-example">"エラーハンドリングの箇所を探して"</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commands Section -->
+    <section class="section">
+        <h2 class="section-title">便利なコマンド</h2>
+        <p class="section-subtitle">覚えておくと便利なスラッシュコマンド</p>
+
+        <div class="commands-table">
+            <div class="command-row header">
+                <div class="command-name">コマンド</div>
+                <div class="command-desc">説明</div>
+            </div>
+            <div class="command-row">
+                <div class="command-name"><code>/help</code></div>
+                <div class="command-desc">ヘルプを表示</div>
+            </div>
+            <div class="command-row">
+                <div class="command-name"><code>/clear</code></div>
+                <div class="command-desc">会話履歴をクリア</div>
+            </div>
+            <div class="command-row">
+                <div class="command-name"><code>/compact</code></div>
+                <div class="command-desc">会話を要約してコンテキストを圧縮</div>
+            </div>
+            <div class="command-row">
+                <div class="command-name"><code>/cost</code></div>
+                <div class="command-desc">現在のセッションのAPI使用量を表示</div>
+            </div>
+            <div class="command-row">
+                <div class="command-name"><code>/doctor</code></div>
+                <div class="command-desc">Claude Codeの設定を診断</div>
+            </div>
+            <div class="command-row">
+                <div class="command-name"><code>/init</code></div>
+                <div class="command-desc">プロジェクト用のCLAUDE.mdを生成</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section class="section bg-gradient">
+        <h2 class="section-title">Tips</h2>
+        <p class="section-subtitle">より効果的に使うためのヒント</p>
+
+        <div class="tips-grid">
+            <div class="tip-card">
+                <div class="tip-icon">📁</div>
+                <h4>CLAUDE.mdを活用</h4>
+                <p>プロジェクトルートにCLAUDE.mdファイルを置くと、プロジェクト固有のコンテキストをClaudeに伝えられます。</p>
+            </div>
+            <div class="tip-card">
+                <div class="tip-icon">🎯</div>
+                <h4>具体的に指示</h4>
+                <p>「修正して」よりも「src/auth.tsの validateToken関数でトークンの有効期限チェックを追加して」のように具体的に。</p>
+            </div>
+            <div class="tip-card">
+                <div class="tip-icon">📋</div>
+                <h4>タスクを分割</h4>
+                <p>大きな機能追加は複数の小さなタスクに分割すると、より正確に実装できます。</p>
+            </div>
+            <div class="tip-card">
+                <div class="tip-icon">🔄</div>
+                <h4>フィードバックを与える</h4>
+                <p>結果を確認して「ここを直して」「これでOK」などフィードバックを与えると、より良い結果に。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Links Section -->
+    <section class="section">
+        <h2 class="section-title">さらに詳しく</h2>
+        <p class="section-subtitle">公式リソース</p>
+
+        <div class="links-grid">
+            <a href="https://github.com/anthropics/claude-code" class="link-card" target="_blank">
+                <div class="link-icon">📘</div>
+                <h4>GitHub リポジトリ</h4>
+                <p>ソースコード、Issue、Discussions</p>
+            </a>
+            <a href="https://docs.anthropic.com" class="link-card" target="_blank">
+                <div class="link-icon">📖</div>
+                <h4>公式ドキュメント</h4>
+                <p>詳細なガイドとリファレンス</p>
+            </a>
+            <a href="examples.html" class="link-card">
+                <div class="link-icon">💡</div>
+                <h4>使用例</h4>
+                <p>実際の使用シーンを見る</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span>🤖</span> Claude Code
+            </div>
+            <p>Powered by Claude Opus 4.5 | Anthropic</p>
+            <div class="footer-links">
+                <a href="https://github.com/anthropics/claude-code">GitHub</a>
+                <a href="https://docs.anthropic.com">Documentation</a>
+            </div>
+            <div class="footer-related">
+                <span>Related:</span>
+                <a href="gemini-cli/index.html">✨ Gemini CLI</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
