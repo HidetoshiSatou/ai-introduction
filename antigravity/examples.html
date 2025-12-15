@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examples - Antigravity</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Roboto:wght@300;400&family=Fira+Code&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="background-glow glow-1"></div>
+    <div class="background-glow glow-2"></div>
+
+    <div class="container">
+        <nav>
+            <a href="index.html" class="logo">
+                <span></span> Antigravity
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="examples.html" class="active">Examples</a></li>
+            </ul>
+        </nav>
+
+        <section class="examples-section">
+            <div class="section-header">
+                <h2><span class="gradient-text">Use Cases</span></h2>
+                <p>Antigravityのパワフルな機能を体験してください。</p>
+            </div>
+
+            <div class="example-container">
+
+                <!-- Example: Game Development -->
+                <div id="game" class="example-block">
+                    <div class="example-text">
+                        <h3>Game Development</h3>
+                        <p>
+                            「ブロック崩しを作って」の一言で、このゲームが動きます。<br>
+                            Canvas API、物理演算、入力処理すべてをAIがコーディング。
+                        </p>
+                        <button class="cta-button"
+                            onclick="document.getElementById('gameCanvas').scrollIntoView();">Play Now below</button>
+                    </div>
+                    <div class="example-visual">
+                        <div class="game-container">
+                            <div id="start-overlay" class="start-overlay" onclick="startGame()">
+                                <button class="start-btn">Click to Start</button>
+                            </div>
+                            <canvas id="gameCanvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example: Terminal -->
+                <div id="terminal" class="example-block">
+                    <div class="example-text">
+                        <h3>Agentic Workflow</h3>
+                        <p>
+                            エラーの修正からデプロイまで、ターミナル操作を自律的に行います。
+                        </p>
+                    </div>
+                    <div class="example-visual">
+                        <div class="mock-window">
+                            <div class="window-header">
+                                <div class="dot red"></div>
+                                <div class="dot yellow"></div>
+                                <div class="dot green"></div>
+                                <span class="window-title">antigravity-terminal</span>
+                            </div>
+                            <div class="window-content" id="terminal-content">
+                                <!-- JS will type here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example: Multi-language Code -->
+                <div id="code" class="example-block">
+                    <div class="example-text">
+                        <h3>Multi-Language Support</h3>
+                        <p>
+                            プロジェクトの言語に合わせて、最適なスタイルでコードを生成します。
+                        </p>
+                    </div>
+                    <div class="example-visual">
+                        <div class="mock-window">
+                            <div class="code-tabs">
+                                <div class="tab active" onclick="switchTab('ts')">TypeScript</div>
+                                <div class="tab" onclick="switchTab('py')">Python</div>
+                                <div class="tab" onclick="switchTab('go')">Go</div>
+                            </div>
+                            <div class="window-content" id="code-content">
+                                <!-- Default TS Content -->
+                                <span class="code-line"><span class="keyword">class</span> <span
+                                        class="function">ProductController</span> {</span>
+                                <span class="code-line"> <span class="keyword">async</span> <span
+                                        class="function">optimize</span>(data: Data) {</span>
+                                <span class="code-line"> <span class="comment">// Type-safe implementation</span></span>
+                                <span class="code-line"> <span class="keyword">return</span> <span
+                                        class="keyword">await</span> Service.<span
+                                        class="function">process</span>(data);</span>
+                                <span class="code-line"> }</span>
+                                <span class="code-line">}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example: Visual Artifacts -->
+                <div id="visual" class="example-block">
+                    <div class="example-text">
+                        <h3>Visual Artifacts</h3>
+                        <p>
+                            複雑なアーキテクチャやフローも、自動的に図解。
+                        </p>
+                    </div>
+                    <div class="example-visual">
+                        <div class="mock-window">
+                            <div class="window-header">
+                                <span class="window-title">architecture.mermaid</span>
+                            </div>
+                            <div class="window-content">
+                                <div class="visual-graph">
+                                    <div class="node">Input</div>
+                                    <div class="node">Agent</div>
+                                    <div class="node">Output</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example: Rapid Prototyping -->
+                <div id="prototype" class="example-block">
+                    <div class="example-text">
+                        <h3>Rapid Prototyping</h3>
+                        <p>
+                            まったく異なるデザインテーマも自在に。<br>
+                            例えば、ビジネスライクな「求人サイト」のモックアップも一瞬で作成。
+                        </p>
+                        <a href="jobsite.html" class="cta-button" target="_blank"
+                            style="margin-top: 1rem; text-align: center;">View Job Site Mockup</a>
+                    </div>
+                    <div class="example-visual">
+                        <div class="mock-window" style="transform: rotateY(-5deg) rotateX(5deg);">
+                            <div class="window-header" style="background: #fff; border-bottom: 1px solid #ccc;">
+                                <div class="dot" style="background: #ff5f56"></div>
+                                <div class="dot" style="background: #ffbd2e"></div>
+                                <div class="dot" style="background: #27c93f"></div>
+                                <span class="window-title" style="color: #333">jobsite.html (Preview)</span>
+                            </div>
+                            <div class="window-content"
+                                style="background: #f4f6f9; color: #333; height: 300px; padding: 0; overflow: hidden; position: relative;">
+                                <!-- Mini Preview of Job Site -->
+                                <div style="background: #0087e0; color: white; padding: 2rem; text-align: center;">
+                                    <h1 style="font-size: 1.2rem; margin-bottom: 1rem;">あなたの「はたらく」を...</h1>
+                                    <div
+                                        style="background: white; padding: 0.5rem; border-radius: 4px; max-width: 80%; margin: 0 auto; height: 20px;">
+                                    </div>
+                                </div>
+                                <div style="padding: 1rem;">
+                                    <div
+                                        style="background: white; padding: 1rem; border-radius: 4px; margin-bottom: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                        <div
+                                            style="width: 60%; height: 10px; background: #0087e0; margin-bottom: 0.5rem;">
+                                        </div>
+                                        <div style="width: 80%; height: 8px; background: #eee;"></div>
+                                    </div>
+                                    <div
+                                        style="background: white; padding: 1rem; border-radius: 4px; margin-bottom: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                        <div
+                                            style="width: 50%; height: 10px; background: #0087e0; margin-bottom: 0.5rem;">
+                                        </div>
+                                        <div style="width: 70%; height: 8px; background: #eee;"></div>
+                                    </div>
+                                </div>
+                                <div
+                                    style="position: absolute; bottom: 0; width: 100%; height: 100px; background: linear-gradient(to top, rgba(0,0,0,0.5), transparent); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 1rem;">
+                                    <span style="color: white; font-weight: bold;">Click button to view full site</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 Antigravity Project. Built with AI.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="game.js"></script>
+    <script>
+        // Tab Switching Logic
+        const codeSnippets = {
+            ts: `<span class="code-line"><span class="keyword">class</span> <span class="function">ProductController</span> {</span>
+                 <span class="code-line">    <span class="keyword">async</span> <span class="function">optimize</span>(data: Data) {</span>
+                 <span class="code-line">        <span class="comment">// Type-safe implementation</span></span>
+                 <span class="code-line">        <span class="keyword">return</span> <span class="keyword">await</span> Service.<span class="function">process</span>(data);</span>
+                 <span class="code-line">    }</span>
+                 <span class="code-line">}</span>`,
+            py: `<span class="code-line"><span class="keyword">class</span> <span class="function">ProductController</span>:</span>
+                 <span class="code-line">    <span class="keyword">def</span> <span class="function">optimize</span>(self, data):</span>
+                 <span class="code-line">        <span class="comment"># Pythonic way</span></span>
+                 <span class="code-line">        <span class="keyword">return</span> service.<span class="function">process</span>(data)</span>`,
+            go: `<span class="code-line"><span class="keyword">func</span> (<span class="function">c</span> *Controller) <span class="function">Optimize</span>(d Data) {</span>
+                 <span class="code-line">    <span class="comment">// Goncurrent processing</span></span>
+                 <span class="code-line">    <span class="keyword">go</span> service.<span class="function">Process</span>(d)</span>
+                 <span class="code-line">}</span>`
+        };
+
+        function switchTab(lang) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('code-content').innerHTML = codeSnippets[lang];
+        }
+    </script>
+</body>
+
+</html>

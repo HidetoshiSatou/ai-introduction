@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MockDoda - 転職ならMockDoda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0087e0;
+            --primary-dark: #0060a0;
+            --secondary: #f4f6f9;
+            --text-main: #333;
+            --text-sub: #666;
+            --border: #ddd;
+            --white: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        body {
+            background: var(--secondary);
+            color: var(--text-main);
+        }
+
+        /* Header */
+        header {
+            background: var(--white);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .site-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu ul {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Search Hero */
+        .search-hero {
+            background: var(--primary);
+            background: linear-gradient(135deg, #0087e0 0%, #005691 100%);
+            padding: 3rem 1rem;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .search-hero h1 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 1rem;
+            min-width: 200px;
+        }
+
+        .search-btn {
+            padding: 0.8rem 2rem;
+            background: #faad14;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-weight: 700;
+            cursor: pointer;
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        .search-btn:hover {
+            background: #d48806;
+        }
+
+        /* Banner Area */
+        .campaign-banner {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            text-align: center;
+        }
+
+        .banner-img {
+            width: 100%;
+            height: 150px;
+            background: #e6f7ff;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px dashed #91d5ff;
+            color: #0050b3;
+            font-weight: bold;
+        }
+
+        /* Job List */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+            border-left: 5px solid var(--primary);
+            padding-left: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .job-card {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .job-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-color: #b37feb;
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .company-name {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            margin-bottom: 0.5rem;
+        }
+
+        .job-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            background: #f0f5ff;
+            color: var(--primary);
+            border-radius: 12px;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .job-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .job-details th {
+            text-align: left;
+            color: var(--text-sub);
+            font-weight: normal;
+            padding: 0.5rem 0;
+            width: 100px;
+            font-size: 0.9rem;
+        }
+
+        .job-details td {
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .job-image {
+            width: 200px;
+            height: 130px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+        }
+
+        .card-footer {
+            padding: 1rem 1.5rem;
+            background: #f9f9f9;
+            text-align: right;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: #fff;
+            padding: 3rem 1rem;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: Grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #888;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-col a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            color: #666;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-inner">
+            <a href="#" class="site-logo">
+                <span style="font-size: 1.5em; line-height: 1;">⬢</span> MockDoda
+            </a>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="#">求人検索</a></li>
+                    <li><a href="#">転職ガイド</a></li>
+                    <li><a href="#">イベント</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="#" class="btn btn-outline">ログイン</a>
+                <a href="#" class="btn btn-primary">会員登録 (無料)</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Search -->
+    <section class="search-hero">
+        <h1>あなたの「はたらく」を、もっと自由に。</h1>
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="職種、キーワード、会社名など">
+            <input type="text" class="search-input" placeholder="勤務地 (東京、大阪など)">
+            <button class="search-btn">検索</button>
+        </div>
+    </section>
+
+    <!-- Banner -->
+    <div class="campaign-banner">
+        <div class="banner-img">
+            Spring Campaign: 今ならスカウト受信率UP中！
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2 class="section-title">新着求人 (New Arrival)</h2>
+
+        <!-- Job Card 1 -->
+        <article class="job-card">
+            <div class="card-header">
+                <div>
+                    <div class="company-name">株式会社テック・フロンティア</div>
+                    <div class="job-title">【フルリモート】AIエンジニア / 自社SaaS開発 / 年収800~1200万円</div>
+                    <div class="tags">
+                        <span class="tag">正社員</span>
+                        <span class="tag">完全週休2日</span>
+                        <span class="tag">未経験OK</span>
+                    </div>
+                </div>
+                <span
+                    style="color: #ff4d4f; font-weight: bold; border: 1px solid #ff4d4f; padding: 2px 8px; font-size: 0.8rem;">NEW</span>
+            </div>
+            <div class="card-body">
+                <div class="job-details">
+                    <table>
+                        <tr>
+                            <th>仕事内容</th>
+                            <td>生成AIを活用した自社プロダクトのバックエンド開発およびモデルチューニング...</td>
+                        </tr>
+                        <tr>
+                            <th>対象となる方</th>
+                            <td>Pythonでの開発経験3年以上 / AWS等のクラウド知識</td>
+                        </tr>
+                        <tr>
+                            <th>勤務地</th>
+                            <td>リモートワーク（本社：東京都渋谷区）</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="job-image">Open Office Image</div>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="btn btn-primary">詳細を見る・応募する</a>
+            </div>
+        </article>
+
+        <!-- Job Card 2 -->
+        <article class="job-card">
+            <div class="card-header">
+                <div>
+                    <div class="company-name">Global Design Corp.</div>
+                    <div class="job-title">UI/UXデザイナー / グローバル案件多数 / 英語力活かせる</div>
+                    <div class="tags">
+                        <span class="tag">業務委託</span>
+                        <span class="tag">フレックス</span>
+                        <span class="tag">服装自由</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="job-details">
+                    <table>
+                        <tr>
+                            <th>仕事内容</th>
+                            <td>大手クライアントのWebサイト・アプリのデザイン制作、ユーザーリサーチ...</td>
+                        </tr>
+                        <tr>
+                            <th>対象となる方</th>
+                            <td>Figma実務経験2年以上 / ポートフォリオ必須</td>
+                        </tr>
+                        <tr>
+                            <th>勤務地</th>
+                            <td>東京都港区（六本木駅直結）</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="job-image">Design Team Image</div>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="btn btn-primary">詳細を見る・応募する</a>
+            </div>
+        </article>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h3>求人を探す</h3>
+                <ul>
+                    <li><a href="#">職種から探す</a></li>
+                    <li><a href="#">勤務地から探す</a></li>
+                    <li><a href="#">業種から探す</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>サービス</h3>
+                <ul>
+                    <li><a href="#">転職エージェント</a></li>
+                    <li><a href="#">スカウト</a></li>
+                    <li><a href="#">合格診断</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>運営会社</h3>
+                <ul>
+                    <li><a href="#">会社概要</a></li>
+                    <li><a href="#">ニュースリリース</a></li>
+                    <li><a href="#">お問い合わせ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 MockDoda Career, Inc.
+        </div>
+    </footer>
+
+    <!-- Back to Antigravity -->
+    <a href="examples.html"
+        style="position: fixed; bottom: 20px; right: 20px; background: #000; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); font-weight: bold; z-index: 1000;">
+        ← Back to Examples
+    </a>
+
+</body>
+
+</html>
